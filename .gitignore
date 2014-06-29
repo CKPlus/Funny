@@ -56,3 +56,6 @@ whoscall/coverage.xml
 # NodeJS
 node_modules/
 bower_components/
+
+#DB
+*.db
