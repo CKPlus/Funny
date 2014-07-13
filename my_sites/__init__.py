@@ -1,6 +1,17 @@
 from flask import Flask
+from flask.ext.admin import Admin, BaseView, expose
+
+
 
 app = Flask(__name__)
+
+admin = Admin(name='Tikann')
+class MyView(BaseView):
+    @expose('/')
+    def index(self):
+        return self.render('index.html')
+admin.add_view(MyView(name='Hello'))
+admin.init_app(app)
 
 
 from my_sites.tikann import tikann_app

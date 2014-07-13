@@ -1,4 +1,6 @@
 Flask
 ipython
 scrapy
+mysql-python
 Flask-SQLAlchemy
+Flask-Admin

@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String
 from my_sites.tikann.database import Base
 
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = 'test_users'
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=True)
     email = Column(String(120), unique=True)

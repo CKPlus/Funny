@@ -7,7 +7,10 @@ from sqlalchemy.ext.declarative import declarative_base
 DB_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)),
 	                   'test.db',)
 
-engine = create_engine('sqlite:///%s' % DB_PATH, convert_unicode=True)
+# engine = create_engine('sqlite:///%s' % DB_PATH, convert_unicode=True)
+engine = create_engine('mysql://root:12345678@localhost/funny')
+
+
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
