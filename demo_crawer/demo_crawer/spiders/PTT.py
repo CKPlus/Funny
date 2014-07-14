@@ -10,6 +10,8 @@ import functools
 
 from urlparse import urljoin
 
+import dateutil.parser 
+
 class PttSpider(CrawlSpider):
     name = "PTT"
     allowed_domains = ["www.ptt.cc"]
@@ -34,10 +36,12 @@ class PttSpider(CrawlSpider):
         articles = sel.xpath('//div[@class="r-ent"]')
         for article in articles:
             item = Ptt()
-            item['title'] = ''.join(article.xpath('div[@class="title"]/a/text()').extract())
-            item['likes'] = ''.join(article.xpath('div[@class="nrec"]/span/text()').extract())
-            item['url'] = ''.join(article.xpath('div[@class="title"]/a/@href').extract())
-            item['publish_date'] = ''.join(article.xpath('div[@class="meta"]/div[@class="date"]/text()').extract())
+            title = ''.join(article.xpath('div[@class="title"]/a/text()').extract())
+            item['title'] = title
+            item['likes'] = ''.join(article.xpath('div[@class="nrec"]/span/text()').extract()).strip()
+            title_url = ''.join(article.xpath('div[@class="title"]/a/@href').extract())
+            item['url'] = urljoin(response.url, title_url)
+            # item['publish_date'] = ''.join(article.xpath('div[@class="meta"]/div[@class="date"]/text()').extract()).stripe()
             item['author'] = ''.join(article.xpath('div[@class="meta"]/div[@class="author"]/text()').extract())
 
             if item['url']:
@@ -55,6 +59,8 @@ class PttSpider(CrawlSpider):
         item = response.request.meta['item']
         if not len(sel.xpath('//img/@src')) == 0:
             item['content'] = sel.xpath('//img/@src').extract()
+            str_date = ''.join(sel.xpath('//*[@id="main-content"]/div[4]/span[2]/text()').extract())
+            item['publish_date'] = dateutil.parser.parse(str_date)
         else:
             item['content'] = ""
 
