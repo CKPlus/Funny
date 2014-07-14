@@ -4,3 +4,5 @@ scrapy
 mysql-python
 Flask-SQLAlchemy
 Flask-Admin
+python-dateutil
+

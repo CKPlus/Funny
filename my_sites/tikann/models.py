@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship, backref
 from my_sites.tikann.database import Base
 # from my_sites import db
@@ -23,7 +23,7 @@ class Article(Base):
     title = Column(String(100))
     url = Column(String(200))
     likes = Column(Integer)
-    publish_date = Column(String(50))
+    publish_date = Column(DateTime)
     author = Column(String(50))
     content = relationship('Image', backref='article')
 
