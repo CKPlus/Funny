@@ -12,6 +12,9 @@ from my_sites.tikann.models import User, Article, Image
 
 
 class DemoCrawerPipeline(object):
+
+    # def __init__(self):
+
     def process_item(self, item, spider):
     	if not item['content']:
     	    raise DropItem("Missing content url in %s" % item)
@@ -32,9 +35,17 @@ class DemoCrawerPipeline(object):
 
                 db_session.add(article)
                 db_session.commit()
-            except Exception as e:
-                print 'Save to db error, messages : %s' % e
+            except:
+                db_session.rollback()
+                raise
+            finally:
+                db_session.close()
+
+
             return item
+
+    # def close_spider(self, spider):
+    #     db_session.commit()
 
 
 # class StoreToDBPipeline(object):

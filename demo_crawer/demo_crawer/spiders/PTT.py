@@ -38,7 +38,11 @@ class PttSpider(CrawlSpider):
             item = Ptt()
             title = ''.join(article.xpath('div[@class="title"]/a/text()').extract())
             item['title'] = title
+
             item['likes'] = ''.join(article.xpath('div[@class="nrec"]/span/text()').extract()).strip()
+            if item['likes'] == u'爆':
+                item['likes'] = 100
+                
             title_url = ''.join(article.xpath('div[@class="title"]/a/@href').extract())
             item['url'] = urljoin(response.url, title_url)
             # item['publish_date'] = ''.join(article.xpath('div[@class="meta"]/div[@class="date"]/text()').extract()).stripe()
